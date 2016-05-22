@@ -44,6 +44,8 @@ install:
   - IF %PHP%==1 echo extension=php_memcache.dll >> php.ini-memcache
 
   - IF %PHP%==1 echo curl.cainfo=c:\php\cacert.pem >> php.ini
+  - IF %PHP%==1 copy /Y php.ini-development php.ini
+
   - IF %PHP%==1 appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
   - mkdir %APPDATA%\Composer
   - composer self-update --no-progress --ansi
