@@ -25,7 +25,7 @@ init:
 install:
   - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
   - cd c:\php
-  - IF %SAMECONFIG% appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
+  - IF %SAMECONFIG%==true appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
   # Download php 5
   - IF %PHP%=="5" appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-5.5.9-nts-Win32-VC11-x86.zip
   - IF %PHP%=="5" 7z x php-5.5.9-nts-Win32-VC11-x86.zip -y >nul
@@ -45,28 +45,28 @@ install:
   - IF IF %PHP%=="7" 7z x php_memcache-3.0.8-5.6-nts-vc11-x86.zip -y >nul
   - IF IF %PHP%=="7" 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
 
-  - IF %SAMECONFIG% del /Q *.zip
-  - IF %SAMECONFIG% cd ..
-  - IF %SAMECONFIG% echo @php %%~dp0composer.phar %%* > composer.bat
+  - IF %SAMECONFIG%==true del /Q *.zip
+  - IF %SAMECONFIG%==true cd ..
+  - IF %SAMECONFIG%==true echo @php %%~dp0composer.phar %%* > composer.bat
 
-  - IF %SAMECONFIG% echo max_execution_time=1200 >> php.ini-development
-  - IF %SAMECONFIG% echo date.timezone="UTC" >> php.ini-development
-  - IF %SAMECONFIG% echo extension_dir=ext >> php.ini-development
-  - IF %SAMECONFIG% echo extension=php_openssl.dll >> php.ini-development
-  - IF %SAMECONFIG% echo extension=php_mbstring.dll >> php.ini-development
-  - IF %SAMECONFIG% echo extension=php_fileinfo.dll >> php.ini-development
-  - IF %SAMECONFIG% echo extension=php_curl.dll >> php.ini-development
+  - IF %SAMECONFIG%==true echo max_execution_time=1200 >> php.ini-development
+  - IF %SAMECONFIG%==true echo date.timezone="UTC" >> php.ini-development
+  - IF %SAMECONFIG%==true echo extension_dir=ext >> php.ini-development
+  - IF %SAMECONFIG%==true echo extension=php_openssl.dll >> php.ini-development
+  - IF %SAMECONFIG%==true echo extension=php_mbstring.dll >> php.ini-development
+  - IF %SAMECONFIG%==true echo extension=php_fileinfo.dll >> php.ini-development
+  - IF %SAMECONFIG%==true echo extension=php_curl.dll >> php.ini-development
 
-  - IF %SAMECONFIG% copy /Y php.ini-development php.ini-apcu
-  - IF %SAMECONFIG% echo apc.enable_cli=1 >> php.ini-apcu
+  - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-apcu
+  - IF %SAMECONFIG%==true echo apc.enable_cli=1 >> php.ini-apcu
 
-  - IF %SAMECONFIG% copy /Y php.ini-development php.ini-memcache
-  - IF %SAMECONFIG% echo extension=php_memcache.dll >> php.ini-memcache
+  - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-memcache
+  - IF %SAMECONFIG%==true echo extension=php_memcache.dll >> php.ini-memcache
 
-  - IF %SAMECONFIG% echo curl.cainfo=c:\php\cacert.pem >> php.ini
-  - IF %SAMECONFIG% copy /Y php.ini-development php.ini
+  - IF %SAMECONFIG%==true echo curl.cainfo=c:\php\cacert.pem >> php.ini
+  - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini
 
-  - IF %SAMECONFIG% appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
+  - IF %SAMECONFIG%==true appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
   - mkdir %APPDATA%\Composer
   - composer self-update --no-progress --ansi
   - composer global require hirak/prestissimo:dev-master --no-progress --ansi
