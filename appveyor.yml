@@ -23,7 +23,7 @@ init:
 install:
   - IF EXIST c:\php ELSE (mkdir c:\php)
   - cd c:\php
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
   # Download php 5
   - IF %CONFIGURATION%==php5 appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-5.5.9-nts-Win32-VC11-x86.zip
   - IF %CONFIGURATION%==php5 7z x php-5.5.9-nts-Win32-VC11-x86.zip -y >nul
@@ -43,28 +43,28 @@ install:
   - IF IF %CONFIGURATION%==php7 7z x php_memcache-3.0.8-5.6-nts-vc11-x86.zip -y >nul
   - IF IF %CONFIGURATION%==php7 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
 
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 del /Q *.zip
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 cd ..
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo @php %%~dp0composer.phar %%* > composer.bat
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 del /Q *.zip
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 cd ..
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo @php %%~dp0composer.phar %%* > composer.bat
 
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo max_execution_time=1200 >> php.ini-development
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo date.timezone="UTC" >> php.ini-development
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo extension_dir=ext >> php.ini-development
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo extension=php_openssl.dll >> php.ini-development
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo extension=php_mbstring.dll >> php.ini-development
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo extension=php_fileinfo.dll >> php.ini-development
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo extension=php_curl.dll >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo max_execution_time=1200 >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo date.timezone="UTC" >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo extension_dir=ext >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo extension=php_openssl.dll >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo extension=php_mbstring.dll >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo extension=php_fileinfo.dll >> php.ini-development
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo extension=php_curl.dll >> php.ini-development
 
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 copy /Y php.ini-development php.ini-apcu
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo apc.enable_cli=1 >> php.ini-apcu
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 copy /Y php.ini-development php.ini-apcu
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo apc.enable_cli=1 >> php.ini-apcu
 
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 copy /Y php.ini-development php.ini-memcache
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo extension=php_memcache.dll >> php.ini-memcache
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 copy /Y php.ini-development php.ini-memcache
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo extension=php_memcache.dll >> php.ini-memcache
 
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 echo curl.cainfo=c:\php\cacert.pem >> php.ini
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 copy /Y php.ini-development php.ini
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 echo curl.cainfo=c:\php\cacert.pem >> php.ini
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 copy /Y php.ini-development php.ini
 
-  - IF %CONFIGURATION%==php5 ELSEIF %CONFIGURATION%==php7 appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
+  - IF %CONFIGURATION%==php5 || %CONFIGURATION%==php7 appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
   - mkdir %APPDATA%\Composer
   - composer self-update --no-progress --ansi
   - composer global require hirak/prestissimo:dev-master --no-progress --ansi
