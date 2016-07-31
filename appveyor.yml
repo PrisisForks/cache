@@ -69,7 +69,6 @@ install:
   - IF %SAMECONFIG%==true appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
   - mkdir %APPDATA%\Composer
   - composer self-update --no-progress --ansi
-  - composer global require hirak/prestissimo:dev-master --no-progress --ansi
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
   - cd c:\projects\cache
   - composer install --no-progress --ansi
