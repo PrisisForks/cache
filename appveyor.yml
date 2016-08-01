@@ -1,10 +1,9 @@
 version: 1.0.{build}
 
 before_build:
-  - choco install redis-64
+  - choco install redis
   - redis-server --service-install
   - redis-server --service-start
-  - nuget restore .\Hangfire.Redis.StackExchange.sln
 
 build:
   publish_nuget: true
