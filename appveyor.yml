@@ -1,6 +1,8 @@
 version: 1.0.{build}
 
 before_build:
+  - IF EXIST c:\redis ELSE (mkdir c:\redis)
+  - cd c:\redis
   - nuget install redis-64 -excludeversion
   - redis-64\tools\redis-server.exe --service-install
   - redis-64\tools\redis-server.exe --service-start
