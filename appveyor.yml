@@ -1,4 +1,4 @@
-version: false
+version: 1.{build}
 
 services:
   - mongodb
