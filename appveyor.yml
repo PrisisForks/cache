@@ -1,7 +1,7 @@
-version: 1.0.{build}
+version: false
 
 services:
-  - mongodb
+  # - mongodb
 
 clone_depth: 1
 clone_folder: c:\projects\cache
