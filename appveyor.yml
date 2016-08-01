@@ -1,4 +1,19 @@
-build: false
+version: 1.0.{build}
+
+before_build:
+  - choco install redis-64
+  - redis-server --service-install
+  - redis-server --service-start
+  - nuget restore .\Hangfire.Redis.StackExchange.sln
+
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+
+services:
+  - mongodb
+
 clone_depth: 1
 clone_folder: c:\projects\cache
 
