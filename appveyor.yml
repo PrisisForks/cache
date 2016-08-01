@@ -1,12 +1,5 @@
 version: 1.0.{build}
 
-before_build:
-  - IF EXIST c:\redis ELSE (mkdir c:\redis)
-  - cd c:\redis
-  - nuget install redis-64 -excludeversion
-  - redis-64\tools\redis-server.exe --service-install
-  - redis-64\tools\redis-server.exe --service-start
-
 build:
   publish_nuget: true
   publish_nuget_symbols: true
@@ -39,6 +32,11 @@ init:
   - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v DelayedExpansion /t REG_DWORD /d 1 /f
 
 install:
+  - IF EXIST c:\redis ELSE (mkdir c:\redis)
+  - cd c:\redis
+  - nuget install redis-64 -excludeversion
+  - redis-64\tools\redis-server.exe --service-install
+  - redis-64\tools\redis-server.exe --service-start
   - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
   - cd c:\php
   - IF %SAMECONFIG%==true appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
