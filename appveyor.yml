@@ -28,7 +28,7 @@ init:
 
 install:
   - choco install -y memcached
-  - choco install -y redis-64
+  - nuget install redis-64 -excludeversion
   - redis-64\tools\redis-server.exe --service-install
   - redis-64\tools\redis-server.exe --service-start
 
@@ -72,6 +72,12 @@ install:
   - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-memcache
   - IF %SAMECONFIG%==true echo extension=php_memcache.dll >> php.ini-memcache
 
+  - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-redis
+  - IF %SAMECONFIG%==true echo extension=php_redis.dll >> php.ini-redis
+
+  - IF %SAMECONFIG%==true echo extension=php_memcache.dll >> php.ini-development
+  - IF %SAMECONFIG%==true echo extension=php_redis.dll >> php.ini-development
+
   - IF %SAMECONFIG%==true echo curl.cainfo=c:\php\cacert.pem >> php.ini
   - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini
 
@@ -88,5 +94,7 @@ test_script:
   - copy /Y c:\php\php.ini-apcu c:\php\php.ini
   - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
   - copy /Y c:\php\php.ini-memcache c:\php\php.ini
+  - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  - copy /Y c:\php\php.ini-redis c:\php\php.ini
   - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
   - exit %X%
