@@ -1,7 +1,7 @@
 version: 1.{build}
 
-# services:
-#   - mongodb
+services:
+  - mongodb
 
 clone_depth: 1
 clone_folder: c:\projects\cache
@@ -29,9 +29,10 @@ init:
 install:
   - mkdir c:\redis
   - cd c:\redis
-  # - nuget install redis-64 -excludeversion
-  # - redis-64\tools\redis-server.exe --service-install
-  # - redis-64\tools\redis-server.exe --service-start
+  - nuget install redis-64 -excludeversion
+  - redis-64\tools\redis-server.exe --service-install
+  - redis-64\tools\redis-server.exe --service-start
+  - cd ..
   - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
   - cd c:\php
   - IF %SAMECONFIG%==true appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
