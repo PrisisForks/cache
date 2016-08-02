@@ -49,9 +49,9 @@ install:
   - IF %PHP_VERSION%==5 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/memcache/3.0.8/php_memcache-3.0.8-5.5-nts-vc11-x86.zip
   - IF %PHP_VERSION%==5 7z x php_memcache-3.0.8-5.5-nts-vc11-x86.zip -y >nul
 
-  - IF %PHP_VERSION%==7 echo Downloading PHP-mongodb
-  - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.2/php_mongodb-1.1.2-7.0-nts-vc14-x86.zip
-  - IF %PHP_VERSION%==7 7z x php_mongodb-1.1.2-7.0-nts-vc14-x86.zip -y >nul
+  - IF %PHP_VERSION%==5 echo Downloading PHP-mongodb
+  - IF %PHP_VERSION%==5 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.2/php_mongodb-1.1.2-7.0-nts-vc14-x86.zip
+  - IF %PHP_VERSION%==5 7z x php_mongodb-1.1.2-7.0-nts-vc14-x86.zip -y >nul
 
   # Download php 7
   - IF %PHP_VERSION%==7 echo Downloading Php 7.0.7
@@ -68,7 +68,7 @@ install:
   - IF %PHP_VERSION%==7 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
 
   - IF %PHP_VERSION%==7 echo Downloading PHP-apcu_bc
-  - IF %PHP_VERSION%==7 appveyor DownloadFilehttp://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x64.zip
+  - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x64.zip
   - IF %PHP_VERSION%==7 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x64.zip -y >nul
 
   - IF %SAMECONFIG%==true del /Q \ext\*.zip
