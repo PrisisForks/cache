@@ -12,10 +12,8 @@ cache:
 
 environment:
   matrix:
-    - PHP_VERSION: 5
-      SAMECONFIG: true
     - PHP_VERSION: 7
-      SAMECONFIG: true
+    - PHP_VERSION: 5
 
 matrix:
   fast_finish: true
@@ -34,7 +32,7 @@ install:
 
   - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
   - cd c:\php
-  - IF %SAMECONFIG%==true appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
+  - appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
   # Download php 5
   - IF %PHP_VERSION%==5 echo Downloading PHP 5.5.9
   - IF %PHP_VERSION%==5 appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-5.5.9-nts-Win32-VC11-x86.zip
@@ -73,39 +71,39 @@ install:
   - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc -1.0.3-7.0-nts-vc14-x86.zip
   - IF %PHP_VERSION%==7 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip -y >nul
 
-  - IF %SAMECONFIG%==true del /Q *.zip
-  - IF %SAMECONFIG%==true cd ..
+  - del /Q *.zip
+  - cd ..
 
-  - IF %SAMECONFIG%==true echo @php %%~dp0composer.phar %%* > composer.bat
+  - echo @php %%~dp0composer.phar %%* > composer.bat
 
-  - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-build
-  - IF %SAMECONFIG%==true echo max_execution_time=1200 >> php.ini-build
-  - IF %SAMECONFIG%==true echo date.timezone="UTC" >> php.ini-build
-  - IF %SAMECONFIG%==true echo extension_dir=ext >> php.ini-build
-  - IF %SAMECONFIG%==true echo extension=php_openssl.dll >> php.ini-build
-  - IF %SAMECONFIG%==true echo extension=php_mbstring.dll >> php.ini-build
-  - IF %SAMECONFIG%==true echo extension=php_fileinfo.dll >> php.ini-build
-  - IF %SAMECONFIG%==true echo extension=php_curl.dll >> php.ini-build
+  - copy /Y php.ini-development php.ini-build
+  - echo max_execution_time=1200 >> php.ini-build
+  - echo date.timezone="UTC" >> php.ini-build
+  - echo extension_dir=ext >> php.ini-build
+  - echo extension=php_openssl.dll >> php.ini-build
+  - echo extension=php_mbstring.dll >> php.ini-build
+  - echo extension=php_fileinfo.dll >> php.ini-build
+  - echo extension=php_curl.dll >> php.ini-build
 
-  - IF %SAMECONFIG%==true copy /Y php.ini-build php.ini-apcu
-  - IF %SAMECONFIG%==true echo extension=php_apc.dll >> php.ini-apcu
-  - IF %SAMECONFIG%==true echo apc.enable_cli=1 >> php.ini-apcu
+  - copy /Y php.ini-build php.ini-apcu
+  - echo extension=php_apc.dll >> php.ini-apcu
+  - echo apc.enable_cli=1 >> php.ini-apcu
 
-  - IF %SAMECONFIG%==true copy /Y php.ini-build php.ini-memcache
-  - IF %SAMECONFIG%==true echo extension=php_memcache.dll >> php.ini-memcache
+  - copy /Y php.ini-build php.ini-memcache
+  - echo extension=php_memcache.dll >> php.ini-memcache
 
-  - IF %SAMECONFIG%==true copy /Y php.ini-build php.ini-redis
-  - IF %SAMECONFIG%==true echo extension=php_redis.dll >> php.ini-redis
+  - copy /Y php.ini-build php.ini-redis
+  - echo extension=php_redis.dll >> php.ini-redis
 
-  - IF %SAMECONFIG%==true echo extension=php_memcache.dll >> php.ini-build
-  - IF %SAMECONFIG%==true echo extension=php_redis.dll >> php.ini-build
+  - echo extension=php_memcache.dll >> php.ini-build
+  - echo extension=php_redis.dll >> php.ini-build
 
-  - IF %SAMECONFIG%==true echo curl.cainfo=c:\php\cacert.pem >> php.ini
-  - IF %SAMECONFIG%==true copy /Y php.ini-build php.ini
+  - echo curl.cainfo=c:\php\cacert.pem >> php.ini
+  - copy /Y php.ini-build php.ini
 
-  - IF %SAMECONFIG%==true appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
-  - cd c:\projects\cache
+  - appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
   - mkdir %APPDATA%\Composer
+  - cd c:\projects\cache
   - composer self-update --no-progress --ansi
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
   - composer install --no-progress --ansi
