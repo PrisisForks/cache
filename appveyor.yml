@@ -68,7 +68,7 @@ install:
   - IF %PHP_VERSION%==7 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
 
   - IF %PHP_VERSION%==7 echo Downloading PHP-apcu_bc
-  - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc -1.0.3-7.0-nts-vc14-x86.zip
+  - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip
   - IF %PHP_VERSION%==7 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip -y >nul
 
   - del /Q *.zip
