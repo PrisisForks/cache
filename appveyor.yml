@@ -71,7 +71,7 @@ install:
   - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x64.zip
   - IF %PHP_VERSION%==7 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x64.zip -y >nul
 
-  - IF %SAMECONFIG%==true del /Q \ext\*.zip
+  - IF %SAMECONFIG%==true del /Q *.zip
   - IF %SAMECONFIG%==true cd ..
   - IF %SAMECONFIG%==true echo @php %%~dp0composer.phar %%* > composer.bat
 
@@ -100,10 +100,10 @@ install:
   - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini
 
   - IF %SAMECONFIG%==true appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
+  - cd c:\projects\cache
   - mkdir %APPDATA%\Composer
   - composer self-update --no-progress --ansi
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
-  - cd c:\projects\cache
   - composer install --no-progress --ansi
 
 test_script:
