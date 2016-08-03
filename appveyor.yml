@@ -77,7 +77,7 @@ install:
   - IF %SAMECONFIG%==true cd ..
   - IF %SAMECONFIG%==true echo @php %%~dp0composer.phar %%* > composer.bat
 
-  - IF %SAMECONFIG%==true copy /Y php.ini-buildelopment php.ini-build
+  - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-build
   - IF %SAMECONFIG%==true echo max_execution_time=1200 >> php.ini-build
   - IF %SAMECONFIG%==true echo date.timezone="UTC" >> php.ini-build
   - IF %SAMECONFIG%==true echo extension_dir=ext >> php.ini-build
