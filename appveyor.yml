@@ -84,6 +84,7 @@ install:
   - echo extension=php_mbstring.dll >> php.ini-build
   - echo extension=php_fileinfo.dll >> php.ini-build
   - echo extension=php_curl.dll >> php.ini-build
+  - echo curl.cainfo=c:\php\cacert.pem >> php.ini-build
 
   - copy /Y php.ini-build php.ini-apcu
   - echo extension=php_apc.dll >> php.ini-apcu
@@ -98,7 +99,6 @@ install:
   - echo extension=php_memcache.dll >> php.ini-build
   - echo extension=php_redis.dll >> php.ini-build
 
-  - echo curl.cainfo=c:\php\cacert.pem >> php.ini
   - copy /Y php.ini-build php.ini
 
   - appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
