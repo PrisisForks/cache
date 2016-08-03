@@ -76,6 +76,8 @@ install:
   - IF %SAMECONFIG%==true del /Q *.zip
   - IF %SAMECONFIG%==true cd ..
 
+  - IF %SAMECONFIG%==true echo @php %%~dp0composer.phar %%* > composer.bat
+
   - IF %SAMECONFIG%==true copy /Y php.ini-development php.ini-build
   - IF %SAMECONFIG%==true echo max_execution_time=1200 >> php.ini-build
   - IF %SAMECONFIG%==true echo date.timezone="UTC" >> php.ini-build
@@ -100,8 +102,6 @@ install:
 
   - IF %SAMECONFIG%==true echo curl.cainfo=c:\php\cacert.pem >> php.ini
   - IF %SAMECONFIG%==true copy /Y php.ini-build php.ini
-
-  - IF %SAMECONFIG%==true echo @php %%~dp0composer.phar %%* > composer.bat
 
   - IF %SAMECONFIG%==true appveyor DownloadFile https://getcomposer.org/download/1.1.0/composer.phar
   - cd c:\projects\cache
