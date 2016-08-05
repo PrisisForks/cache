@@ -83,8 +83,8 @@ install:
   # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/redis/3.0.0/php_redis-3.0.0-7.0-nts-vc14-x86.zip
   # - IF %PHP_VERSION%==70 7z x php_redis-3.0.0-7.0-nts-vc14-x86.zip -y >nul
 
-  - del /Q *.zip
-  - cd ..
+  # - del /Q *.zip
+  # - cd ..
 
   - copy /Y php.ini-development php.ini-build
   - echo extension_dir=ext >> php.ini-build
