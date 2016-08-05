@@ -97,7 +97,7 @@ install:
   - echo extension=php_apc.dll >> php.ini-apcu
   - echo apc.enabled=1 >> php.ini-apcu
   - echo apc.enable_cli=1 >> php.ini-apcu
-  - echp apc.use_request_time=0 >> php.ini-apcu
+  - echo apc.use_request_time=0 >> php.ini-apcu
 
   - copy /Y php.ini-build php.ini-memcache
   - echo extension=php_memcache.dll >> php.ini-memcache
