@@ -87,7 +87,7 @@ install:
   # - cd ..
 
   - copy /Y php.ini-development php.ini-build
-  - echo extension_dir=ext >> php.ini-build
+  # - echo extension_dir=ext >> php.ini-build
   - echo max_execution_time=1200 >> php.ini-build
   - echo date.timezone="UTC" >> php.ini-build
   - echo extension=php_openssl.dll >> php.ini-build
