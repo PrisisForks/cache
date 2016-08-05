@@ -117,6 +117,8 @@ install:
   - echo extension=php_redis.dll >> php.ini-build
   - echo extension=php_mongodb.dll >> php.ini-build
 
+  - copy /Y php.ini-build php.ini
+
   - cd c:\projects\cache
   - appveyor DownloadFile https://getcomposer.org/download/1.2.0/composer.phar
   - php composer.phar self-update --no-progress --ansi
@@ -130,7 +132,6 @@ install:
 test_script:
   - cd c:\projects\cache
   - SET X=0
-  - copy /Y php.ini-build php.ini
   - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
   # - copy /Y c:\php\php.ini-apcu c:\php\php.ini
   # - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
