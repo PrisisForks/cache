@@ -72,6 +72,7 @@ install:
   - IF %PHP_VERSION%==7 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip -y >nul
 
   - del /Q *.zip
+  - ls -l
   - cd ..
 
   - echo @php %%~dp0composer.phar %%* > composer.bat
