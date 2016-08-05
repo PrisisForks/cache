@@ -110,8 +110,12 @@ install:
   - copy /Y php.ini-build php.ini-redis
   - echo extension=php_redis.dll >> php.ini-redis
 
+  - copy /Y php.ini-build php.ini-mongo
+  - echo extension=php_mongodb.dll >> php.ini-mongo
+
   - echo extension=php_memcache.dll >> php.ini-build
   - echo extension=php_redis.dll >> php.ini-build
+  - echo extension=php_mongodb.dll >> php.ini-build
 
   - copy /Y php.ini-build php.ini
 
