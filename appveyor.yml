@@ -65,8 +65,7 @@ install:
   - IF %PHP_VERSION%==70 cd ext
 
   - IF %PHP_VERSION%==70 echo Downloading PHP-memcache
-  - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/memcache/3.0.8/php_memcache-3.0.8-5.6-nts-vc11-x86.zip
-  - IF %PHP_VERSION%==70 7z x php_memcache-3.0.8-5.6-nts-vc11-x86.zip -y >nul
+  - IF %PHP_VERSION%==70 appveyor DownloadFile https://github.com/jur4x/PHP7-memcahe-dll/blob/master/x86/NTS/php_memcache.dll
 
   - IF %PHP_VERSION%==70 echo Downloading PHP-mongodb
   - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.6/php_mongodb-1.1.6-7.0-nts-vc14-x86.zip
@@ -107,7 +106,7 @@ install:
   - copy /Y php.ini-build php.ini-redis
   - echo extension=php_redis.dll >> php.ini-redis
 
-  # - echo extension=php_memcache.dll >> php.ini-build
+  - echo extension=php_memcache.dll >> php.ini-build
   - echo extension=php_redis.dll >> php.ini-build
 
   - copy /Y php.ini-build php.ini
@@ -116,6 +115,10 @@ install:
   - appveyor DownloadFile https://getcomposer.org/download/1.2.0/composer.phar
   - php composer.phar self-update --no-progress --ansi
   - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
+
+  - php composer.phar require --no-update mongodb/mongodb:^1.0
+  - php composer.phar require --no-update predis/predis:^1.0
+
   - php composer.phar install --no-progress --ansi
 
 test_script:
@@ -123,8 +126,8 @@ test_script:
   - SET X=0
   - copy /Y c:\php\php.ini-apcu c:\php\php.ini
   - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
-  - copy /Y c:\php\php.ini-memcache c:\php\php.ini
-  - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
-  - copy /Y c:\php\php.ini-redis c:\php\php.ini
-  - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  # - copy /Y c:\php\php.ini-memcache c:\php\php.ini
+  # - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  # - copy /Y c:\php\php.ini-redis c:\php\php.ini
+  # - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
   - exit %X%
