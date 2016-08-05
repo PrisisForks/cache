@@ -59,29 +59,29 @@ install:
 
   # Download php 7
   - IF %PHP_VERSION%==70 echo Downloading Php 7.0.7
-  - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-7.0.7-nts-Win32-VC14-x86.zip
-  - IF %PHP_VERSION%==70 7z x php-7.0.7-nts-Win32-VC14-x86.zip -y >nul
+  - IF %PHP_VERSION%==70 appveyor DownloadFile https://phpdev.toolsforresearch.com/php-7.0.9-nts-Win32-VC14-x86.zip
+  - IF %PHP_VERSION%==70 7z x php-7.0.9-nts-Win32-VC14-x86.zip -y >nul
   - IF %PHP_VERSION%==70 del /Q *.zip
-  - IF %PHP_VERSION%==70 cd ext
+  # - IF %PHP_VERSION%==70 cd ext
 
-  - IF %PHP_VERSION%==70 echo Downloading PHP-memcache
-  - IF %PHP_VERSION%==70 appveyor DownloadFile https://github.com/nono303/PHP7-memcahe-dll/blob/master/vc14/x86/nts/php_memcache.dll
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-memcache
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile https://github.com/nono303/PHP7-memcahe-dll/blob/master/vc14/x86/nts/php_memcache.dll
 
-  - IF %PHP_VERSION%==70 echo Downloading PHP-mongodb
-  - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.6/php_mongodb-1.1.6-7.0-nts-vc14-x86.zip
-  - IF %PHP_VERSION%==70 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-mongodb
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.6/php_mongodb-1.1.6-7.0-nts-vc14-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
 
-  - IF %PHP_VERSION%==70 echo Downloading PHP-apc
-  - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apc/3.1.13/php_apc-3.1.13-5.4-nts-vc9-x86.zip
-  - IF %PHP_VERSION%==70 7z x php_apc-3.1.13-5.4-nts-vc9-x86.zip -y >nul
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-apc
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apc/3.1.13/php_apc-3.1.13-5.4-nts-vc9-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_apc-3.1.13-5.4-nts-vc9-x86.zip -y >nul
 
-  - IF %PHP_VERSION%==70 echo Downloading PHP-apcu_bc
-  - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip
-  - IF %PHP_VERSION%==70 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip -y >nul
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-apcu_bc
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip -y >nul
 
-  - IF %PHP_VERSION%==70 echo Downloading PHP-redis
-  - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/redis/3.0.0/php_redis-3.0.0-7.0-nts-vc14-x86.zip
-  - IF %PHP_VERSION%==70 7z x php_redis-3.0.0-7.0-nts-vc14-x86.zip -y >nul
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-redis
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/redis/3.0.0/php_redis-3.0.0-7.0-nts-vc14-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_redis-3.0.0-7.0-nts-vc14-x86.zip -y >nul
 
   - del /Q *.zip
   - cd ..
