@@ -52,6 +52,10 @@ install:
   - IF %PHP_VERSION%==5 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.2/php_mongodb-1.1.2-7.0-nts-vc14-x86.zip
   - IF %PHP_VERSION%==5 7z x php_mongodb-1.1.2-7.0-nts-vc14-x86.zip -y >nul
 
+  - IF %PHP_VERSION%==5 echo Downloading PHP-redis
+  - IF %PHP_VERSION%==5 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/redis/3.0.0/php_redis-3.0.0-7.0-nts-vc14-x86.zip
+  - IF %PHP_VERSION%==5 7z x php_redis-3.0.0-7.0-nts-vc14-x86.zip -y >nul
+
   # Download php 7
   - IF %PHP_VERSION%==7 echo Downloading Php 7.0.7
   - IF %PHP_VERSION%==7 appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-7.0.7-nts-Win32-VC14-x86.zip
@@ -90,17 +94,17 @@ install:
   - echo extension=php_curl.dll >> php.ini-build
   - echo curl.cainfo=c:\php\cacert.pem >> php.ini-build
 
-  # - copy /Y php.ini-build php.ini-apcu
-  # - echo extension=php_apc.dll >> php.ini-apcu
-  # - echo apc.enable_cli=1 >> php.ini-apcu
+  - copy /Y php.ini-build php.ini-apcu
+  - echo extension=php_apc.dll >> php.ini-apcu
+  - echo apc.enable_cli=1 >> php.ini-apcu
 
-  # - copy /Y php.ini-build php.ini-memcache
-  # - echo extension=php_memcache.dll >> php.ini-memcache
+  - copy /Y php.ini-build php.ini-memcache
+  - echo extension=php_memcache.dll >> php.ini-memcache
 
-  # - copy /Y php.ini-build php.ini-redis
-  # - echo extension=php_redis.dll >> php.ini-redis
+  - copy /Y php.ini-build php.ini-redis
+  - echo extension=php_redis.dll >> php.ini-redis
 
-  - echo extension=php_memcache.dll >> php.ini-build
+  # - echo extension=php_memcache.dll >> php.ini-build
   - echo extension=php_redis.dll >> php.ini-build
 
   - copy /Y php.ini-build php.ini
