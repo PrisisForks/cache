@@ -1,0 +1,142 @@
+build: false
+
+services:
+  - mongodb
+
+clone_depth: 1
+clone_folder: c:\projects\cache
+
+cache:
+  - c:\php -> appveyor.yml
+  - .phpunit -> phpunit
+
+environment:
+  matrix:
+    - PHP_VERSION: 70
+    # - PHP_VERSION: 55
+
+matrix:
+  fast_finish: true
+
+init:
+  - SET PATH=c:\php;%PATH%
+  - SET COMPOSER_NO_INTERACTION=1
+  - SET ANSICON=121x90 (121x90)
+  - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v DelayedExpansion /t REG_DWORD /d 1 /f
+
+install:
+  - choco install -y memcached
+  - nuget install redis-64 -excludeversion
+  - redis-64\tools\redis-server.exe --service-install
+  - redis-64\tools\redis-server.exe --service-start
+
+  - IF EXIST c:\php (SET PHP=0) ELSE (mkdir c:\php)
+  - cd c:\php
+  - appveyor DownloadFile https://raw.githubusercontent.com/symfony/binary-utils/master/cacert.pem
+
+  # Download php 5
+  - IF %PHP_VERSION%==55 echo Downloading PHP 5.5.9
+  - IF %PHP_VERSION%==55 appveyor DownloadFile http://windows.php.net/downloads/releases/archives/php-5.5.9-nts-Win32-VC11-x86.zip
+  - IF %PHP_VERSION%==55 7z x php-5.5.9-nts-Win32-VC11-x86.zip -y >nul
+  - IF %PHP_VERSION%==55 del /Q *.zip
+  - IF %PHP_VERSION%==55 cd ext
+
+  - IF %PHP_VERSION%==55 echo Downloading PHP-apcu
+  - IF %PHP_VERSION%==55 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu/4.0.10/php_apcu-4.0.10-5.5-nts-vc11-x86.zip
+  - IF %PHP_VERSION%==55 7z x php_apcu-4.0.10-5.5-nts-vc11-x86.zip -y >nul
+
+  - IF %PHP_VERSION%==55 echo Downloading PHP-memcache
+  - IF %PHP_VERSION%==55 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/memcache/3.0.8/php_memcache-3.0.8-5.5-nts-vc11-x86.zip
+  - IF %PHP_VERSION%==55 7z x php_memcache-3.0.8-5.5-nts-vc11-x86.zip -y >nul
+
+  - IF %PHP_VERSION%==55 echo Downloading PHP-mongodb
+  - IF %PHP_VERSION%==55 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.2/php_mongodb-1.1.2-7.0-nts-vc14-x86.zip
+  - IF %PHP_VERSION%==55 7z x php_mongodb-1.1.2-7.0-nts-vc14-x86.zip -y >nul
+
+  - IF %PHP_VERSION%==55 echo Downloading PHP-redis
+  - IF %PHP_VERSION%==55 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/redis/3.0.0/php_redis-3.0.0-7.0-nts-vc14-x86.zip
+  - IF %PHP_VERSION%==55 7z x php_redis-3.0.0-7.0-nts-vc14-x86.zip -y >nul
+
+  # Download php 7
+  - IF %PHP_VERSION%==70 echo Downloading Php 7.0.7
+  - IF %PHP_VERSION%==70 appveyor DownloadFile https://phpdev.toolsforresearch.com/php-7.0.9-nts-Win32-VC14-x86.zip
+  - IF %PHP_VERSION%==70 7z x php-7.0.9-nts-Win32-VC14-x86.zip -y >nul
+  - IF %PHP_VERSION%==70 del /Q *.zip
+  # - IF %PHP_VERSION%==70 cd ext
+
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-memcache
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile https://github.com/nono303/PHP7-memcahe-dll/blob/master/vc14/x86/nts/php_memcache.dll
+
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-mongodb
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/mongodb/1.1.6/php_mongodb-1.1.6-7.0-nts-vc14-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_mongodb-1.1.6-7.0-nts-vc14-x86.zip -y >nul
+
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-apc
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apc/3.1.13/php_apc-3.1.13-5.4-nts-vc9-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_apc-3.1.13-5.4-nts-vc9-x86.zip -y >nul
+
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-apcu_bc
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/apcu_bc/1.0.3/php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_apcu_bc-1.0.3-7.0-nts-vc14-x86.zip -y >nul
+
+  # - IF %PHP_VERSION%==70 echo Downloading PHP-redis
+  # - IF %PHP_VERSION%==70 appveyor DownloadFile http://windows.php.net/downloads/pecl/releases/redis/3.0.0/php_redis-3.0.0-7.0-nts-vc14-x86.zip
+  # - IF %PHP_VERSION%==70 7z x php_redis-3.0.0-7.0-nts-vc14-x86.zip -y >nul
+
+  # - del /Q *.zip
+  # - cd ..
+
+  - copy /Y php.ini-development php.ini-build
+  # - echo extension_dir=ext >> php.ini-build
+  - echo max_execution_time=1200 >> php.ini-build
+  - echo date.timezone="UTC" >> php.ini-build
+  - echo extension=php_openssl.dll >> php.ini-build
+  - echo extension=php_mbstring.dll >> php.ini-build
+  - echo extension=php_fileinfo.dll >> php.ini-build
+  - echo extension=php_curl.dll >> php.ini-build
+  - echo curl.cainfo=c:\php\cacert.pem >> php.ini-build
+
+  - copy /Y php.ini-build php.ini-apcu
+  - echo extension=php_apc.dll >> php.ini-apcu
+  - echo apc.enabled=1 >> php.ini-apcu
+  - echo apc.enable_cli=1 >> php.ini-apcu
+  - echo apc.use_request_time=0 >> php.ini-apcu
+
+  - copy /Y php.ini-build php.ini-memcache
+  - echo extension=php_memcache.dll >> php.ini-memcache
+  - echo memcache.enabled=1 >> php.ini-memcache
+  - echo memcache.enable_cli=1 >> php.ini-memcache
+
+  - copy /Y php.ini-build php.ini-redis
+  - echo extension=php_redis.dll >> php.ini-redis
+
+  - copy /Y php.ini-build php.ini-mongo
+  - echo extension=php_mongodb.dll >> php.ini-mongo
+
+  - echo extension=php_memcache.dll >> php.ini-build
+  - echo extension=php_redis.dll >> php.ini-build
+  - echo extension=php_mongodb.dll >> php.ini-build
+
+  - copy /Y php.ini-build php.ini
+
+  - cd c:\projects\cache
+  - appveyor DownloadFile https://getcomposer.org/download/1.2.0/composer.phar
+  - php composer.phar self-update --no-progress --ansi
+  - IF %APPVEYOR_REPO_BRANCH%==master (SET COMPOSER_ROOT_VERSION=dev-master) ELSE (SET COMPOSER_ROOT_VERSION=%APPVEYOR_REPO_BRANCH%.x-dev)
+
+  - php composer.phar require --no-update mongodb/mongodb:^1.0
+  - php composer.phar require --no-update predis/predis:^1.0
+
+  - php composer.phar install --no-progress --ansi
+
+test_script:
+  - cd c:\projects\cache
+  - SET X=0
+  - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  # - copy /Y c:\php\php.ini-apcu c:\php\php.ini
+  # - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  # - copy /Y c:\php\php.ini-memcache c:\php\php.ini
+  # - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  # - copy /Y c:\php\php.ini-redis c:\php\php.ini
+  # - sh vendor/bin/phpunit -c phpunit.xml.dist -v --coverage-text="php://stdout" || SET X=!errorlevel!
+  - exit %X%
